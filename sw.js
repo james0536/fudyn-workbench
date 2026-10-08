@@ -1,9 +1,10 @@
 /* 外贸工作台 Web 版 Service Worker
  * 提供离线缓存，让"添加到主屏幕"的 App 在无网络时也能打开 */
-const CACHE = 'ftw-cache-v32-phone-sync-20261008';
+const CACHE = 'ftw-cache-v33-webapp-v5v6-20261008';
 const ASSETS = [
   './',
   './index.html',
+  './web.html',
   './web.js',
   './styles.css',
   './v4-workbench.css',
@@ -41,7 +42,7 @@ self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET' || url.origin !== location.origin) return;
 
   // 核心 JS/HTML 使用 network-first，避免 GitHub Pages 更新后仍执行旧同步逻辑。
-  const core = /(?:index\.html|web\.js|sb-sync\.js|pg-sync\.js|cloudbase-patch\.js|cloudbase\.full\.js|v[456]-workbench\.js)$/.test(url.pathname) || url.pathname.endsWith('/');
+  const core = /(?:index\.html|web\.html|web\.js|sw\.js|sb-sync\.js|pg-sync\.js|cloudbase-patch\.js|cloudbase\.full\.js|v[456]-workbench\.js)$/.test(url.pathname) || url.pathname.endsWith('/');
   if (core) {
     e.respondWith(
       fetch(e.request).then((res) => {
